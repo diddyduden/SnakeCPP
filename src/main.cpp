@@ -2,7 +2,6 @@
 #include <raylib.h>
 
 int main() {
-
     //game definitions
     const int width = 700;
     const int height = 700;
@@ -14,11 +13,14 @@ int main() {
     SetTargetFPS(60);
 
     //game loop
-    while (!WindowShouldClose()) {
+    while (WindowShouldClose() == false) {
         BeginDrawing();
         ClearBackground(snakeGrass);
         
+
         DrawRectangle(100, 100, 50, 50, RED);
+
+
 
 
 
