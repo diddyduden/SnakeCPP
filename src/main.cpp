@@ -6,6 +6,13 @@ int main() {
     const int width = 700;
     const int height = 700;
 
+    //snake
+    const int snakeHeadWidth = 50;
+    const int snakeHeadHeight = 50;
+
+    int snakeX = 100;
+    int snakeY = 100;
+
     //colors
     Color snakeGrass = {161, 255, 104, 255 };
 
@@ -15,18 +22,27 @@ int main() {
     //game loop
     while (WindowShouldClose() == false) {
         BeginDrawing();
+
         ClearBackground(snakeGrass);
-        
-
-        DrawRectangle(100, 100, 50, 50, RED);
 
 
+        DrawGrid(32, 0);
 
+        //wasd keybinds
+        if (IsKeyPressed(KEY_W)) {
+            snakeY -= 64;
+        }
+        if (IsKeyPressed(KEY_A)) {
+            snakeX -= 64;
+        }
+        if (IsKeyPressed(KEY_S)) {
+            snakeY += 64;
+        }
+        if (IsKeyPressed(KEY_D)) {
+            snakeX += 64;
+        }
 
-
-
-
-
+        DrawRectangle(snakeX, snakeY, snakeHeadWidth, snakeHeadHeight, RED);
 
         EndDrawing();
     }
