@@ -8,7 +8,7 @@ int main() {
     const int height = 700;
 
     //colors
-    Color snakeGrass = {255, 214, 222, 255 };
+    Color snakeGrass = {161, 255, 104, 255 };
 
     InitWindow(width, height, "Snake");
     SetTargetFPS(60);
@@ -17,8 +17,9 @@ int main() {
     while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(snakeGrass);
+        
+        DrawRectangle(100, 100, 50, 50, RED);
 
-        DrawText("Snake spel det bara börja liksom!", 200, 280, 30, LIGHTGRAY);
 
 
 
@@ -31,3 +32,8 @@ int main() {
 
     return 0;
 }
+
+
+
+// pink color
+// Color snakeGrass = { 255, 214, 222, 255 };
