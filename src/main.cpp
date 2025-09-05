@@ -15,6 +15,11 @@ private:
 
 public:
     //methods
+
+    //drawrectanglerect också
+    Rectangle snakeRect()
+
+
     void movement() {
         if (IsKeyPressed(KEY_W)) {
             snakeY -= 64;
