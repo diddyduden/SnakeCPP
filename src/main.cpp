@@ -7,8 +7,8 @@ int main() {
     const int height = 700;
 
     //snake
-    const int snakeHeadWidth = 50;
-    const int snakeHeadHeight = 50;
+    const int snakeHeadWidth = 60;
+    const int snakeHeadHeight = 60;
 
     int snakeX = 100;
     int snakeY = 100;
