@@ -1,6 +1,13 @@
 #include <iostream>
 #include <raylib.h>
 
+
+//jahhlu
+
+
+
+
+
 class SnakeHead {
     //size and positioning, important vars
 private:
