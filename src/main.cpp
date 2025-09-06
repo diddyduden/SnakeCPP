@@ -15,9 +15,8 @@ private:
 
 public:
     //methods
-
     //drawrectanglerect också
-    Rectangle snakeRect()
+    //Rectangle snakeRect();
 
 
     void movement() {
@@ -45,10 +44,6 @@ public:
 
     void collide() {
 
-    }
-
-    void update() {
-        movement();
     }
 
     //get 
@@ -81,24 +76,22 @@ public:
 class Apple {
 private:
     const int appleWidth = 60;
-    const int appleLength = 60;
+    const int appleHeight = 60;
 
-    //random spawn
-    int appleX = GetRandomValue(700, 700);
-    int appleY = GetRandomValue(700, 700);
+    //random spawn intial spawn
+    int appleX = GetRandomValue(0, 700);
+    int appleY = GetRandomValue(0, 700);
 
 public:
     //methods
-    void appleSpawn() {
-        if ()
+    void appleRespawn() {
+        appleX = GetRandomValue(0, 700);
+        appleY = GetRandomValue(0, 700);
     }
-
-
-
 
     //get
     int getAppleWidth() { return appleWidth; }
-    int getAppleLength() { return appleLength; }
+    int getAppleHeight() { return appleHeight; }
 
     int getAppleX() { return appleX; }
     int getAppleY() { return appleY; }
@@ -121,6 +114,7 @@ int main() {
         
     //initialize things
     SnakeHead snake;
+    Apple apple;
 
     //game loop
     while (WindowShouldClose() == false) {
@@ -129,14 +123,24 @@ int main() {
         //bakgrunden
         ClearBackground(snakeGrass);
 
+
         //snake egenskaper o sånt idk
         snake.movement();
-        DrawRectangle(snake.getSnakeX(), snake.getSnakeY(), snake.getSnakeHeight(), snake.getSnakeHeight(), snake.getColor());
+        Rectangle snakeRect = { snake.getSnakeX(), snake.getSnakeY(), snake.getSnakeHeight(), snake.getSnakeHeight() };
+        DrawRectangleRec(snakeRect, snake.getColor());
 
         //apple
-        DrawRectangle(120, 150, 50, 50, RED);
+        Rectangle appleRect = { apple.getAppleX(), apple.getAppleY(), apple.getAppleWidth(), apple.getAppleHeight() };
+        DrawRectangleRec(appleRect, RED);
 
 
+        //collision med apple, kollision med vägg o sigsjälv soon
+        if (CheckCollisionRecs(snakeRect, appleRect)) {
+            std::cout << "hi";
+            apple.appleRespawn();
+            
+         //snake coverage funktion?
+        }
 
         EndDrawing();
     }
