@@ -1,46 +1,37 @@
 #include <iostream>
 #include <raylib.h>
-
-
-//jahhlu
-
-
-
-
+#include <random>
 
 class SnakeHead {
     //size and positioning, important vars
 private:
-    const int snakeWidth = 60;
-    const int snakeHeight = 60;
+    const int snakeWidth = 40;
+    const int snakeHeight = 40;
+    const int block = 40;
     
-    int snakeX = 100;
-    int snakeY = 100;
+    int snakeX = 120;
+    int snakeY = 120;
 
     bool isCollided = false;
     Color snakeColor = SKYBLUE;
 
 public:
     //methods
-    //drawrectanglerect också
-    //Rectangle snakeRect();
-
-
     void movement() {
         if (IsKeyPressed(KEY_W)) {
-            snakeY -= 64;
+            snakeY -= block;
             std::cout << "pressed W key" << std::endl;
         }
         if (IsKeyPressed(KEY_A)) {
-            snakeX -= 64;
+            snakeX -= block;
             std::cout << "pressed A key" << std::endl;
         }
         if (IsKeyPressed(KEY_S)) {
-            snakeY += 64;
+            snakeY += block;
             std::cout << "pressed S key" << std::endl;
         }
         if (IsKeyPressed(KEY_D)) {
-            snakeX += 64;
+            snakeX += block;
             std::cout << "pressed D key" << std::endl;
         }
     }
@@ -82,12 +73,27 @@ public:
 
 class Apple {
 private:
-    const int appleWidth = 60;
-    const int appleHeight = 60;
+    const int appleWidth = 40;
+    const int appleHeight = 40;
+
+    //random siffra gånger 32 som är mindre än 700 totalt
+    //
+
+    std::random_device rd;
+    std::mt19937 gen(rd());
+
+
+
+
+
 
     //random spawn intial spawn
     int appleX = GetRandomValue(0, 700);
     int appleY = GetRandomValue(0, 700);
+
+
+
+
 
 public:
     //methods
@@ -110,8 +116,8 @@ public:
 
 int main() {
     //game definitions
-    const int width = 700;
-    const int height = 700;
+    const int width = 800;
+    const int height = 800;
 
     InitWindow(width, height, "Snake");
     SetTargetFPS(60);
@@ -122,6 +128,9 @@ int main() {
     //initialize things
     SnakeHead snake;
     Apple apple;
+
+
+
 
     //game loop
     while (WindowShouldClose() == false) {
