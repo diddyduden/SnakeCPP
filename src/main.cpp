@@ -1,74 +1,56 @@
 #include <iostream>
 #include <raylib.h>
-#include <random>
+#include <vector>
 
-class SnakeHead {
-    //size and positioning, important vars
+class SnakeCube {
 private:
     const int snakeWidth = 40;
     const int snakeHeight = 40;
     const int block = 40;
-    
+    Color snakeColor = SKYBLUE;
+
+public:
+    //get
+    int getSnakeWidth() { return snakeWidth; }
+    int getSnakeHeight() { return snakeHeight; }
+    int getBlock() { return block; }
+    Color getColor() { return snakeColor; }
+};
+
+class SnakeHead : public SnakeCube {
+private:
     int snakeX = 120;
     int snakeY = 120;
-
-    bool isCollided = false;
-    Color snakeColor = SKYBLUE;
 
 public:
     //methods
     void movement() {
         if (IsKeyPressed(KEY_W)) {
-            snakeY -= block;
+            snakeY -= getBlock();
             std::cout << "pressed W key" << std::endl;
         }
         if (IsKeyPressed(KEY_A)) {
-            snakeX -= block;
+            snakeX -= getBlock();
             std::cout << "pressed A key" << std::endl;
         }
         if (IsKeyPressed(KEY_S)) {
-            snakeY += block;
+            snakeY += getBlock();
             std::cout << "pressed S key" << std::endl;
         }
         if (IsKeyPressed(KEY_D)) {
-            snakeX += block;
+            snakeX += getBlock();
             std::cout << "pressed D key" << std::endl;
+            std::cout << snakeX << std::endl;
         }
-    }
-
-    void eatApple() {
-
-    }
-
-    void collide() {
-
     }
 
     //get 
     int getSnakeX() { return snakeX; }
     int getSnakeY() { return snakeY; }
 
-    bool getIsCollided() { return isCollided; }
-
-    int getSnakeWidth() { return snakeWidth; }
-    int getSnakeHeight() { return snakeHeight; }
-
-    Color getColor() { return snakeColor; }
-
     //sets
     void setSnakeX(int xPos) { snakeX = xPos; }
     void setSnakeY(int yPos) { snakeY = yPos; }
-
-    void setIsCollided(bool collided) { isCollided = collided; }   
-};
-
-class SnakeCube : SnakeHead {
-private:
-
-
-public:
-
-
 };
 
 class Apple {
@@ -76,32 +58,15 @@ private:
     const int appleWidth = 40;
     const int appleHeight = 40;
 
-    //random siffra gånger 32 som är mindre än 700 totalt
-    //
-
-
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<> distrib(1, 100);
-
-
-
-
-
-
     //random spawn intial spawn
-    int appleX = GetRandomValue(0, 700);
-    int appleY = GetRandomValue(0, 700);
-
-
-
-
+    int appleX = GetRandomValue(0, 20) * 40;
+    int appleY = GetRandomValue(0, 20) * 40;
 
 public:
     //methods
     void appleRespawn() {
-        appleX = GetRandomValue(0, 700);
-        appleY = GetRandomValue(0, 700);
+        appleX = GetRandomValue(0, 20) * 40;
+        appleY = GetRandomValue(0, 20) * 40;
     }
 
     //get
@@ -118,8 +83,8 @@ public:
 
 int main() {
     //game definitions
-    const int width = 800;
-    const int height = 800;
+    const int width = 840;
+    const int height = 840;
 
     InitWindow(width, height, "Snake");
     SetTargetFPS(60);
@@ -130,9 +95,6 @@ int main() {
     //initialize things
     SnakeHead snake;
     Apple apple;
-
-
-
 
     //game loop
     while (WindowShouldClose() == false) {
@@ -187,3 +149,25 @@ int main() {
             snakeX += 64;
         }
         */
+
+
+/*
+äpplerespanwas, check
+create a new snake cube position of the last tail segment or at the head 
+*/
+
+
+
+
+
+//main class är snake cube
+// snkaehead är en subklass av snake cube , har movmeents etc
+//
+
+/*
+alla snake cube ska ha en direction som tas från previous
+snake head ger fixar direction först, sätts i movement, dir = right osv
+skapa en lista och sätta objekten så att du kan använda listor och nås med index
+
+
+*/
