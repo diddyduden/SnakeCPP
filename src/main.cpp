@@ -79,8 +79,10 @@ private:
     //random siffra gånger 32 som är mindre än 700 totalt
     //
 
+
     std::random_device rd;
     std::mt19937 gen(rd());
+    std::uniform_int_distribution<> distrib(1, 100);
 
 
 
