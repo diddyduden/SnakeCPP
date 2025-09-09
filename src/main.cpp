@@ -2,13 +2,22 @@
 #include <raylib.h>
 #include <vector>
 
+//gör om snake classerna
+//t.ex x och y pos ska finnas på båda men det gör det inte just nu.
+//referencces
+
+
+
+//fixa constructor för snake cube, x och y pos
 class SnakeCube {
 private:
-    const int snakeWidth = 40;
-    const int snakeHeight = 40;
     const int block = 40;
-
+    const int& snakeWidth = block;
+    const int& snakeHeight = block;
     Color snakeColor = SKYBLUE;
+
+    int snakeX;
+    int snakeY;
 
 public:
     //get
@@ -17,42 +26,36 @@ public:
     int getBlock() { return block; }
 
     Color getColor() { return snakeColor; }
-};
 
-class SnakeHead : public SnakeCube {
-private:
-    int snakeX = 120;
-    int snakeY = 120;
-
-public:
-    //methods
-    void movement() {
-        if (IsKeyPressed(KEY_W)) {
-            snakeY -= getBlock();
-            std::cout << "pressed W key" << std::endl;
-        }
-        if (IsKeyPressed(KEY_A)) {
-            snakeX -= getBlock();
-            std::cout << "pressed A key" << std::endl;
-        }
-        if (IsKeyPressed(KEY_S)) {
-            snakeY += getBlock();
-            std::cout << "pressed S key" << std::endl;
-        }
-        if (IsKeyPressed(KEY_D)) {
-            snakeX += getBlock();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
-            std::cout << "pressed D key" << std::endl;
-            std::cout << snakeX << std::endl;
-        }
-    }
-
-    //get 
     int getSnakeX() { return snakeX; }
     int getSnakeY() { return snakeY; }
 
     //sets
     void setSnakeX(int xPos) { snakeX = xPos; }
     void setSnakeY(int yPos) { snakeY = yPos; }
+};
+
+class SnakeHead : public SnakeCube {
+public:
+    //methods
+    void movement() {
+        if (IsKeyPressed(KEY_W)) {
+            setSnakeY(getSnakeY() - getBlock());
+            std::cout << "pressed W key" << std::endl;
+        }
+        if (IsKeyPressed(KEY_A)) {
+            setSnakeX(getSnakeX() - getBlock());
+            std::cout << "pressed A key" << std::endl;
+        }
+        if (IsKeyPressed(KEY_S)) {
+            setSnakeY(getSnakeY() + getBlock());
+            std::cout << "pressed S key" << std::endl;
+        }
+        if (IsKeyPressed(KEY_D)) {
+            setSnakeX(getSnakeX() + getBlock());
+            std::cout << "pressed D key" << std::endl;
+        }
+    }
 };
 
 class Apple {
