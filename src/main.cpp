@@ -7,6 +7,7 @@ private:
     const int snakeWidth = 40;
     const int snakeHeight = 40;
     const int block = 40;
+
     Color snakeColor = SKYBLUE;
 
 public:
@@ -14,6 +15,7 @@ public:
     int getSnakeWidth() { return snakeWidth; }
     int getSnakeHeight() { return snakeHeight; }
     int getBlock() { return block; }
+
     Color getColor() { return snakeColor; }
 };
 
@@ -95,7 +97,6 @@ int main() {
     //initialize things
     SnakeHead snake;
     Apple apple;
-    SnakeCube startingCube; 
 
     //game loop
     while (WindowShouldClose() == false) {
@@ -120,7 +121,20 @@ int main() {
             std::cout << "hi";
             apple.appleRespawn();
             
+            //spawn snake cube
+
+
+
+
+
+
+
+
          //snake coverage funktion?
+
+                
+
+
         }
 
         EndDrawing();
