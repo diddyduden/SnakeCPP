@@ -38,7 +38,7 @@ public:
             std::cout << "pressed S key" << std::endl;
         }
         if (IsKeyPressed(KEY_D)) {
-            snakeX += getBlock();
+            snakeX += getBlock();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
             std::cout << "pressed D key" << std::endl;
             std::cout << snakeX << std::endl;
         }
@@ -95,6 +95,7 @@ int main() {
     //initialize things
     SnakeHead snake;
     Apple apple;
+    SnakeCube startingCube; 
 
     //game loop
     while (WindowShouldClose() == false) {
@@ -123,7 +124,7 @@ int main() {
         }
 
         EndDrawing();
-    }
+    }   
     CloseWindow();
 }
 
@@ -150,14 +151,14 @@ int main() {
         }
         */
 
-
+//logik vector osv
 /*
 äpplerespanwas, check
 create a new snake cube position of the last tail segment or at the head 
+push it to vector 
+std::vector<SnakeCube> snakeBody; 
+
 */
-
-
-
 
 
 //main class är snake cube
