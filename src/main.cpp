@@ -6,8 +6,6 @@
 //t.ex x och y pos ska finnas på båda men det gör det inte just nu.
 //referencces
 
-
-
 //fixa constructor för snake cube, x och y pos
 class SnakeCube {
 private:
@@ -20,6 +18,12 @@ private:
     int snakeY;
 
 public:
+    //constructor
+    SnakeCube(int xSnakePos, int ySnakePos) {
+        snakeX = xSnakePos;
+        snakeY = ySnakePos;
+    }
+
     //get
     int getSnakeWidth() { return snakeWidth; }
     int getSnakeHeight() { return snakeHeight; }
@@ -37,7 +41,12 @@ public:
 
 class SnakeHead : public SnakeCube {
 public:
-    //methods
+    SnakeHead(int x, int y) : SnakeCube(x, y) {
+        setSnakeX(x);
+        setSnakeY(y);
+    }
+
+    //movement
     void movement() {
         if (IsKeyPressed(KEY_W)) {
             setSnakeY(getSnakeY() - getBlock());
@@ -98,7 +107,7 @@ int main() {
     Color snakeGrass = {161, 255, 104, 255 };
         
     //initialize things
-    SnakeHead snake;
+    SnakeHead snakeHead(120, 120);
     Apple apple;
 
     //game loop
@@ -110,16 +119,17 @@ int main() {
 
 
         //snake egenskaper o sånt idk
-        snake.movement();
-        Rectangle snakeRect = { snake.getSnakeX(), snake.getSnakeY(), snake.getSnakeHeight(), snake.getSnakeHeight() };
-        DrawRectangleRec(snakeRect, snake.getColor());
+        snakeHead.movement();
+
+        Rectangle snakeRect = { snakeHead.getSnakeX(), snakeHead.getSnakeY(), snakeHead.getSnakeHeight(), snakeHead.getSnakeHeight() };
+        DrawRectangleRec(snakeRect, snakeHead.getColor());
 
         //apple
         Rectangle appleRect = { apple.getAppleX(), apple.getAppleY(), apple.getAppleWidth(), apple.getAppleHeight() };
         DrawRectangleRec(appleRect, RED);
 
 
-        //collision med apple, kollision med vägg o sigsjälv soon
+        //collision apple detection
         if (CheckCollisionRecs(snakeRect, appleRect)) {
             std::cout << "hi";
             apple.appleRespawn();
