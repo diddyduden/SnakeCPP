@@ -13,16 +13,34 @@ private:
     const int& snakeWidth = block;
     const int& snakeHeight = block;
     Color snakeColor = SKYBLUE;
-
+    Rectangle rect;
+        
     int snakeX;
     int snakeY;
 
 public:
+
+    //draw rects for when they spawn
+    void drawCube() {
+
+
+
+
+/*
+            Rectangle snakeRect = { snakeHead.getSnakeX(), snakeHead.getSnakeY(), snakeHead.getSnakeHeight(), snakeHead.getSnakeHeight() };
+        DrawRectangleRec(snakeRect, snakeHead.getColor());
+        */
+    }
+        
+
     //constructor
     SnakeCube(int xSnakePos, int ySnakePos) {
         snakeX = xSnakePos;
         snakeY = ySnakePos;
     }
+
+    //if only snake head, follow snkaehead
+    //else follow latest cube
 
     //get
     int getSnakeWidth() { return snakeWidth; }
