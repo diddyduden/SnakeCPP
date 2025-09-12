@@ -24,6 +24,17 @@ public:
         snakeY = ySnakePos;
     }
 
+    //methods
+    Rectangle drawRect() {
+        Rectangle snakeRect = { (float)getSnakeX(), (float)getSnakeY(), (float)getSnakeHeight(), (float)getSnakeHeight() };
+        DrawRectangleRec(snakeRect, getColor());
+        return snakeRect;
+    }
+
+    void snakeGrow() {
+            
+    }
+
     //get
     int getSnakeWidth() { return snakeWidth; }
     int getSnakeHeight() { return snakeHeight; }
@@ -83,6 +94,14 @@ public:
         appleY = GetRandomValue(0, 20) * 40;
     }
 
+    //drawing
+    Rectangle drawAppleRect() {
+        Rectangle appleRect = { (float)getAppleX(), (float)getAppleY(), (float)getAppleHeight(), (float)getAppleWidth() };
+        DrawRectangleRec(appleRect, RED);
+        return appleRect;
+    }
+
+
     //get
     int getAppleWidth() { return appleWidth; }
     int getAppleHeight() { return appleHeight; }
@@ -109,6 +128,7 @@ int main() {
     //initialize things
     SnakeHead snakeHead(120, 120);
     Apple apple;
+    std::vector<SnakeCube> snakeBody;
 
     //game loop
     while (WindowShouldClose() == false) {
@@ -117,36 +137,32 @@ int main() {
         //bakgrunden
         ClearBackground(snakeGrass);
 
-
         //snake egenskaper o sånt idk
         snakeHead.movement();
+        snakeHead.drawRect();
+        Rectangle snakeRect = snakeHead.drawRect();
 
-        Rectangle snakeRect = { snakeHead.getSnakeX(), snakeHead.getSnakeY(), snakeHead.getSnakeHeight(), snakeHead.getSnakeHeight() };
-        DrawRectangleRec(snakeRect, snakeHead.getColor());
 
         //apple
-        Rectangle appleRect = { apple.getAppleX(), apple.getAppleY(), apple.getAppleWidth(), apple.getAppleHeight() };
-        DrawRectangleRec(appleRect, RED);
+        apple.drawAppleRect();
+        Rectangle appleRect = apple.drawAppleRect();
 
+
+
+
+        
 
         //collision apple detection
         if (CheckCollisionRecs(snakeRect, appleRect)) {
-            std::cout << "hi";
             apple.appleRespawn();
-            
+            snakeBody.push_back(SnakeCube(100, 100));
+
+
+
+
+
             //spawn snake cube
-
-
-
-
-
-
-
-
          //snake coverage funktion?
-
-                
-
 
         }
 
@@ -154,48 +170,3 @@ int main() {
     }   
     CloseWindow();
 }
-
-/* pink color
-// Color snakeGrass = { 255, 214, 222, 255 };
-//behöver ingen constructor för alla värden kommer ju startas likadant?
-
-//theme? ändra tema (färger på orm bakgrund osv)
-
-
-        
-        //wasd keybinds
-        if (IsKeyPressed(KEY_W)) {
-            snakeY -= 64;
-        }
-        if (IsKeyPressed(KEY_A)) {
-            snakeX -= 64;
-        }
-        if (IsKeyPressed(KEY_S)) {
-            snakeY += 64;
-        }
-        if (IsKeyPressed(KEY_D)) {
-            snakeX += 64;
-        }
-        */
-
-//logik vector osv
-/*
-äpplerespanwas, check
-create a new snake cube position of the last tail segment or at the head 
-push it to vector 
-std::vector<SnakeCube> snakeBody; 
-
-*/
-
-
-//main class är snake cube
-// snkaehead är en subklass av snake cube , har movmeents etc
-//
-
-/*
-alla snake cube ska ha en direction som tas från previous
-snake head ger fixar direction först, sätts i movement, dir = right osv
-skapa en lista och sätta objekten så att du kan använda listor och nås med index
-
-
-*/
