@@ -32,7 +32,8 @@ public:
     }
 
     void snakeGrow() {
-            
+        std::vector<SnakeCube> snakeBody;
+        snakeBody.push_back(SnakeCube(100, 100));
     }
 
     //get
@@ -83,7 +84,7 @@ private:
     const int appleWidth = 40;
     const int appleHeight = 40;
 
-    //random spawn intial spawn
+    //random spawn initial spawn
     int appleX = GetRandomValue(0, 20) * 40;
     int appleY = GetRandomValue(0, 20) * 40;
 
@@ -100,7 +101,6 @@ public:
         DrawRectangleRec(appleRect, RED);
         return appleRect;
     }
-
 
     //get
     int getAppleWidth() { return appleWidth; }
@@ -128,7 +128,6 @@ int main() {
     //initialize things
     SnakeHead snakeHead(120, 120);
     Apple apple;
-    std::vector<SnakeCube> snakeBody;
 
     //game loop
     while (WindowShouldClose() == false) {
@@ -155,18 +154,12 @@ int main() {
         //collision apple detection
         if (CheckCollisionRecs(snakeRect, appleRect)) {
             apple.appleRespawn();
-            snakeBody.push_back(SnakeCube(100, 100));
-
-
-
-
-
-            //spawn snake cube
-         //snake coverage funktion?
+            
 
         }
-
         EndDrawing();
     }   
     CloseWindow();
 }
+
+//cube spawns in the previous position
