@@ -31,11 +31,6 @@ public:
         return snakeRect;
     }
 
-    void snakeGrow() {
-        std::vector<SnakeCube> snakeBody;
-        snakeBody.push_back(SnakeCube(100, 100));
-    }
-
     //get
     int getSnakeWidth() { return snakeWidth; }
     int getSnakeHeight() { return snakeHeight; }
@@ -56,6 +51,10 @@ public:
     SnakeHead(int x, int y) : SnakeCube(x, y) {
         setSnakeX(x);
         setSnakeY(y);
+    }
+
+    void snakeGrow(std::vector<SnakeCube>& snakeBody) {
+        snakeBody.push_back(SnakeCube(400, 400));
     }
 
     //movement
@@ -129,6 +128,8 @@ int main() {
     SnakeHead snakeHead(120, 120);
     Apple apple;
 
+    std::vector<SnakeCube> snakeBody;
+
     //game loop
     while (WindowShouldClose() == false) {
         BeginDrawing();
@@ -138,23 +139,21 @@ int main() {
 
         //snake egenskaper o sånt idk
         snakeHead.movement();
-        snakeHead.drawRect();
         Rectangle snakeRect = snakeHead.drawRect();
+
+        for (auto& cube : snakeBody) {
+            cube.drawRect();
+        }
 
 
         //apple
-        apple.drawAppleRect();
         Rectangle appleRect = apple.drawAppleRect();
 
-
-
-
-        
 
         //collision apple detection
         if (CheckCollisionRecs(snakeRect, appleRect)) {
             apple.appleRespawn();
-            
+            snakeHead.snakeGrow(snakeBody);
 
         }
         EndDrawing();
