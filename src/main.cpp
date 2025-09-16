@@ -5,6 +5,7 @@
 //gör om snake classerna
 //t.ex x och y pos ska finnas på båda men det gör det inte just nu.
 //referencces
+//poo
 
 //fixa constructor för snake cube, x och y pos
 class SnakeCube {
