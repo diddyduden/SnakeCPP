@@ -10,8 +10,8 @@
 class SnakeCube {
 private:
     const int block = 40;
-    const int& snakeWidth = block;
-    const int& snakeHeight = block;
+    const int snakeWidth = block;
+    const int snakeHeight = block;
     Color snakeColor = SKYBLUE;
 
     int snakeX;
@@ -26,7 +26,7 @@ public:
 
     //methods
     Rectangle drawRect() {
-        Rectangle snakeRect = { (float)getSnakeX(), (float)getSnakeY(), (float)getSnakeHeight(), (float)getSnakeHeight() };
+        Rectangle snakeRect = { (float)getSnakeX(), (float)getSnakeY(), (float)getSnakeWidth(), (float)getSnakeHeight() };
         DrawRectangleRec(snakeRect, getColor());
         return snakeRect;
     }
@@ -47,6 +47,10 @@ public:
 };
 
 class SnakeHead : public SnakeCube {
+private:
+    int prevHeadX;
+    int prevHeadY;
+
 public:
     SnakeHead(int x, int y) : SnakeCube(x, y) {
         setSnakeX(x);
@@ -54,7 +58,34 @@ public:
     }
 
     void snakeGrow(std::vector<SnakeCube>& snakeBody) {
-        snakeBody.push_back(SnakeCube(400, 400));
+        SnakeCube& tail = snakeBody.back();
+        snakeBody.push_back(SnakeCube(tail.getSnakeX(), getSnakeY()));
+    }
+
+    void update(std::vector<SnakeCube>& snakeBody) {
+        int currentX = getSnakeX();
+        int currentY = getSnakeY();
+
+        movement();
+
+        if (currentX != getSnakeX() || currentY != getSnakeY()) {
+            int prevX = currentX;
+            int prevY = currentY;
+
+            for (auto& cube : snakeBody) {
+                int tempX = cube.getSnakeX();
+                int tempY = cube.getSnakeY();
+
+                cube.setSnakeX(prevX);
+                cube.setSnakeY(prevY);
+
+                prevX = tempX;
+                prevY = tempY;
+            }
+        }
+
+        prevHeadX = currentX;
+        prevHeadY = currentY;
     }
 
     //movement
@@ -96,7 +127,7 @@ public:
 
     //drawing
     Rectangle drawAppleRect() {
-        Rectangle appleRect = { (float)getAppleX(), (float)getAppleY(), (float)getAppleHeight(), (float)getAppleWidth() };
+        Rectangle appleRect = { (float)getAppleX(), (float)getAppleY(), (float)getAppleWidth(), (float)getAppleHeight() };
         DrawRectangleRec(appleRect, RED);
         return appleRect;
     }
@@ -125,10 +156,13 @@ int main() {
     Color snakeGrass = {161, 255, 104, 255 };
         
     //initialize things
+    std::vector<SnakeCube> snakeBody;
+
     SnakeHead snakeHead(120, 120);
+    snakeBody.push_back(SnakeCube(80, 120));
+    snakeBody.push_back(SnakeCube(40, 120));
     Apple apple;
 
-    std::vector<SnakeCube> snakeBody;
 
     //game loop
     while (WindowShouldClose() == false) {
@@ -138,13 +172,13 @@ int main() {
         ClearBackground(snakeGrass);
 
         //snake egenskaper o sånt idk
-        snakeHead.movement();
+
+        snakeHead.update(snakeBody);
         Rectangle snakeRect = snakeHead.drawRect();
 
         for (auto& cube : snakeBody) {
             cube.drawRect();
         }
-
 
         //apple
         Rectangle appleRect = apple.drawAppleRect();
@@ -154,7 +188,6 @@ int main() {
         if (CheckCollisionRecs(snakeRect, appleRect)) {
             apple.appleRespawn();
             snakeHead.snakeGrow(snakeBody);
-
         }
         EndDrawing();
     }   
