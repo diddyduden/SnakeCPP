@@ -233,3 +233,8 @@ int main() {
     }   
     CloseWindow();
 }
+
+//play audio when moving, eating, death
+//when dead -> start new game?
+//apple cant spawn on snake place ? how to do?
+//new vector for all free squares, have apple spawn in only free squares.
