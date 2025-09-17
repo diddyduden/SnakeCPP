@@ -68,10 +68,6 @@ public:
         setSnakeY(y);
     }
 
-    //D work
-    //S no work
-    //A work
-    //W no work
     void snakeGrow(std::vector<SnakeCube>& snakeBody) {
         SnakeCube& tail = snakeBody.back();
 
@@ -122,29 +118,28 @@ public:
         //prevHeadY = currentY;
     }
 
-    //movement
     void movement() {
         if (IsKeyPressed(KEY_W)) {
             setSnakeY(getSnakeY() - getBlock());
-            std::cout << "pressed W key" << std::endl;
+            std::cout << getSnakeY() << std::endl;
             setDirX(0);
             setDirY(-getBlock());
         }
         if (IsKeyPressed(KEY_A)) {
             setSnakeX(getSnakeX() - getBlock());
-            std::cout << "pressed A key" << std::endl;
+            std::cout << getSnakeX() << std::endl;
             setDirX(-getBlock());
             setDirY(0);
         }
         if (IsKeyPressed(KEY_S)) {
             setSnakeY(getSnakeY() + getBlock());
-            std::cout << "pressed S key" << std::endl;
+            std::cout << getSnakeY() << std::endl;
             setDirX(0); 
             setDirY(getBlock());
         }
         if (IsKeyPressed(KEY_D)) {
             setSnakeX(getSnakeX() + getBlock());
-            std::cout << "pressed D key" << std::endl;
+            std::cout << getSnakeX() << std::endl;
             setDirX(getBlock());
             setDirY(0);
         }
@@ -217,29 +212,29 @@ int main() {
         snakeHead.update(snakeBody);
         Rectangle snakeRect = snakeHead.drawRect();
 
+        //draw cubes + if collision with itself
         for (auto& cube : snakeBody) {
-            cube.drawRect();
+            Rectangle cubeRect = cube.drawRect();
+
+            //om du går ut ur mappen eller collision med sig själv
+            if (CheckCollisionRecs(cubeRect, snakeRect) || 
+                snakeHead.getSnakeX() > width - snakeHead.getBlock()  ||
+                snakeHead.getSnakeX() < 0 ||
+                snakeHead.getSnakeY() > height - snakeHead.getBlock() ||
+                snakeHead.getSnakeY() < 0) {
+
+                std::cout << "u dead";
+            }
         }
 
         //apple
         Rectangle appleRect = apple.drawAppleRect();
-
-
-
 
         //collision apple detection
         if (CheckCollisionRecs(snakeRect, appleRect)) {
             apple.appleRespawn();
             snakeHead.snakeGrow(snakeBody);
         }
-
-        
-
-
-
-
-
-
         EndDrawing();
     }   
     CloseWindow();
