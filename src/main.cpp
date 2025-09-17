@@ -18,6 +18,10 @@ private:
     int snakeX;
     int snakeY;
 
+    //1 = up, höger
+    int dirX;
+    int dirY;
+
 public:
     //constructor
     SnakeCube(int xSnakePos, int ySnakePos) {
@@ -42,36 +46,47 @@ public:
     int getSnakeX() { return snakeX; }
     int getSnakeY() { return snakeY; }
 
+    int getDirX() { return dirX; }
+    int getDirY() { return dirY; }
+
     //sets
     void setSnakeX(int xPos) { snakeX = xPos; }
     void setSnakeY(int yPos) { snakeY = yPos; }
+
+    void setDirX(int x) { dirX = x; }
+    void setDirY(int y) { dirY = y; }
 };
 
 class SnakeHead : public SnakeCube {
 private:
-    int prevHeadX;
-    int prevHeadY;
-
-    //1 = up, höger
-    //int dirX;
-    //int dirY;
-
+    //int prevHeadX;
+    //int prevHeadY;
+    
 public:
     SnakeHead(int x, int y) : SnakeCube(x, y) {
         setSnakeX(x);
         setSnakeY(y);
     }
 
-
-    //- dir ofHead
+    //D work
+    //S no work
+    //A work
+    //W no work
     void snakeGrow(std::vector<SnakeCube>& snakeBody) {
         SnakeCube& tail = snakeBody.back();
-        snakeBody.push_back(SnakeCube(tail.getSnakeX(), tail.getSnakeY()));
+
+        int newX = tail.getSnakeX() - tail.getDirX();
+        int newY = tail.getSnakeY() - tail.getDirY();
+
+        snakeBody.push_back(SnakeCube(newX, newY));
     }
 
     void update(std::vector<SnakeCube>& snakeBody) {
         int currentX = getSnakeX();
         int currentY = getSnakeY();
+
+        int currentDirX = getDirX();
+        int currentDirY = getDirY();
 
         movement();
 
@@ -79,20 +94,32 @@ public:
             int prevX = currentX;
             int prevY = currentY;
 
+            int prevDirX = currentDirX;
+            int prevDirY = currentDirY;
+
             for (auto& cube : snakeBody) {
                 int tempX = cube.getSnakeX();
                 int tempY = cube.getSnakeY();
 
+                int tempDirX = cube.getDirX();
+                int tempDirY = cube.getDirY();
+
                 cube.setSnakeX(prevX);
                 cube.setSnakeY(prevY);
 
+                cube.setDirX(prevDirX);
+                cube.setDirY(prevDirY);
+
                 prevX = tempX;
                 prevY = tempY;
+
+                prevDirX = tempDirX;
+                prevDirY = tempDirY;
             }
         }
-
-        prevHeadX = currentX;
-        prevHeadY = currentY;
+        //behövs inte?
+        //prevHeadX = currentX;
+        //prevHeadY = currentY;
     }
 
     //movement
@@ -100,28 +127,28 @@ public:
         if (IsKeyPressed(KEY_W)) {
             setSnakeY(getSnakeY() - getBlock());
             std::cout << "pressed W key" << std::endl;
-
+            setDirX(0);
+            setDirY(-getBlock());
         }
         if (IsKeyPressed(KEY_A)) {
             setSnakeX(getSnakeX() - getBlock());
             std::cout << "pressed A key" << std::endl;
+            setDirX(-getBlock());
+            setDirY(0);
         }
         if (IsKeyPressed(KEY_S)) {
             setSnakeY(getSnakeY() + getBlock());
             std::cout << "pressed S key" << std::endl;
+            setDirX(0); 
+            setDirY(getBlock());
         }
         if (IsKeyPressed(KEY_D)) {
             setSnakeX(getSnakeX() + getBlock());
             std::cout << "pressed D key" << std::endl;
+            setDirX(getBlock());
+            setDirY(0);
         }
     }
-
-
-
-    //void setDirX(int x) { dirX = x; }
-    //void setDirY(int y) { dirY = y; }
-
-
 };
 
 class Apple {
@@ -187,13 +214,17 @@ int main() {
         ClearBackground(snakeGrass);
 
         //snake egenskaper o sånt idk
-
         snakeHead.update(snakeBody);
         Rectangle snakeRect = snakeHead.drawRect();
 
+        for (auto& cube : snakeBody) {
+            cube.drawRect();
+        }
 
         //apple
         Rectangle appleRect = apple.drawAppleRect();
+
+
 
 
         //collision apple detection
@@ -202,9 +233,12 @@ int main() {
             snakeHead.snakeGrow(snakeBody);
         }
 
-        for (auto& cube : snakeBody) {
-            cube.drawRect();
-        }
+        
+
+
+
+
+
 
         EndDrawing();
     }   
