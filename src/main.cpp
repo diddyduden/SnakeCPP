@@ -52,15 +52,21 @@ private:
     int prevHeadX;
     int prevHeadY;
 
+    //1 = up, höger
+    //int dirX;
+    //int dirY;
+
 public:
     SnakeHead(int x, int y) : SnakeCube(x, y) {
         setSnakeX(x);
         setSnakeY(y);
     }
 
+
+    //- dir ofHead
     void snakeGrow(std::vector<SnakeCube>& snakeBody) {
         SnakeCube& tail = snakeBody.back();
-        snakeBody.push_back(SnakeCube(tail.getSnakeX(), getSnakeY()));
+        snakeBody.push_back(SnakeCube(tail.getSnakeX(), tail.getSnakeY()));
     }
 
     void update(std::vector<SnakeCube>& snakeBody) {
@@ -94,6 +100,7 @@ public:
         if (IsKeyPressed(KEY_W)) {
             setSnakeY(getSnakeY() - getBlock());
             std::cout << "pressed W key" << std::endl;
+
         }
         if (IsKeyPressed(KEY_A)) {
             setSnakeX(getSnakeX() - getBlock());
@@ -108,6 +115,13 @@ public:
             std::cout << "pressed D key" << std::endl;
         }
     }
+
+
+
+    //void setDirX(int x) { dirX = x; }
+    //void setDirY(int y) { dirY = y; }
+
+
 };
 
 class Apple {
@@ -177,9 +191,6 @@ int main() {
         snakeHead.update(snakeBody);
         Rectangle snakeRect = snakeHead.drawRect();
 
-        for (auto& cube : snakeBody) {
-            cube.drawRect();
-        }
 
         //apple
         Rectangle appleRect = apple.drawAppleRect();
@@ -190,6 +201,11 @@ int main() {
             apple.appleRespawn();
             snakeHead.snakeGrow(snakeBody);
         }
+
+        for (auto& cube : snakeBody) {
+            cube.drawRect();
+        }
+
         EndDrawing();
     }   
     CloseWindow();
